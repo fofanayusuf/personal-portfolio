@@ -62,6 +62,15 @@
         <p>Curiosity builds wealth in the digital age. Each skill is an asset, each idea a seed.</p>
         <a href="blog3.html" class="read-more">Read More →</a>
       </div>
+      <div class="blog-card">
+  <h3>Your Passion Is the Point</h3>
+  <p>
+    In a noisy world chasing speed, clarity comes from stillness.
+    Passion isn’t found by scrolling faster—it’s revealed when you listen deeper.
+  </p>
+  <a href="/blog4.html" class="read-more">Read More →</a>
+</div>
+
     </div>
   </section>
 
@@ -174,9 +183,38 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Yusuf Admirable Fofana. All rights reserved.</p>
+      <p>© 2026 Yusuf Admirable Fofana. All rights reserved.</p>
     </div>
   </footer>
+
+<!-- Toast container -->
+<div id="toast" class="toast"></div>
+
+<style>
+/* Toast styles */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: -400px; /* start off-screen */
+  background-color: #1f2937; /* dark gray */
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  font-family: sans-serif;
+  font-size: 16px;
+  z-index: 1000;
+  opacity: 0;
+  transition: right 0.5s ease, opacity 0.5s ease;
+}
+
+/* Toast show state */
+.toast.show {
+  right: 20px;
+  opacity: 1;
+}
+</style>
+
 
   <!-- Floating Socials (Mobile Only) -->
   <div class="floating-socials">
@@ -189,54 +227,40 @@
 
   <script src="script.js"></script>
   <script>
-    // Hamburger toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.getElementById('navLinks');
+// Hamburger toggle
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('show');
+  hamburger.classList.toggle('active');
+});
 
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('show');
-      hamburger.classList.toggle('active');  // animate hamburger to ✖
-    });
+// Toast popup function
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
 
-    // Scroll to subscribe
-    function scrollToSubscribe() {
-      document.getElementById("subscribe").scrollIntoView({ behavior: "smooth" });
-    }
+  // Hide after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
 
-    // Newsletter subscription
-    function subscribe(event) {
-      event.preventDefault();
-      const email = document.getElementById("email").value;
-      if(email) {
-        alert(`Thanks for subscribing, ${email}!`);
-        document.getElementById("email").value = "";
-      }
-      return false;
-    }
+// Newsletter subscription
+function subscribe(event) {
+  event.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  if(email) {
+    showToast(`Thanks for subscribing, ${email}! You’re now part of our community.`);
+    document.getElementById("email").value = "";
+  } else {
+    showToast("Please enter a valid email.");
+  }
+  return false;
+}
+</script>
 
-    // Footer form submission (Formspree)
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.querySelector(".footer-right form");
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-
-        const response = await fetch(form.action, {
-          method: form.method,
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-          alert("Thanks! I'll get back to you soon.");
-          form.reset();
-        } else {
-          alert("Oops! Something went wrong. Please try again.");
-        }
-      });
-    });
-  </script>
 </body>
 </html>
 

@@ -112,15 +112,45 @@
 
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Yusuf Admirable Fofana. All rights reserved.</p>
+      <p>© 2026 Yusuf Admirable Fofana. All rights reserved.</p>
     </div>
   </footer>
+
+<!-- Toast container -->
+<div id="toast" class="toast"></div>
+
+<style>
+/* Toast styles */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: -400px; /* start off-screen */
+  background-color: #1f2937; /* dark gray */
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  font-family: sans-serif;
+  font-size: 16px;
+  z-index: 1000;
+  opacity: 0;
+  transition: right 0.5s ease, opacity 0.5s ease;
+}
+
+/* Toast show state */
+.toast.show {
+  right: 20px;
+  opacity: 1;
+}
+</style>
+
+
 
   <!-- JavaScript -->
   <script src="blog.js"></script>
 </body>
 <script>
-  // Hamburger toggle
+// Hamburger toggle
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.getElementById('navLinks');
 hamburger.addEventListener('click', () => {
@@ -128,18 +158,33 @@ hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('active');
 });
 
+// Toast popup function
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+
+  // Hide after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
 // Newsletter subscription
 function subscribe(event) {
   event.preventDefault();
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("email").value.trim();
   if(email) {
-    alert(`Thanks for subscribing, ${email}!`);
+    showToast(`Thanks for subscribing, ${email}! You’re now part of our community.`);
     document.getElementById("email").value = "";
+  } else {
+    showToast("Please enter a valid email.");
   }
   return false;
 }
-
 </script>
+
+
 </html>
 
 
